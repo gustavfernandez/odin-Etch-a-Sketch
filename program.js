@@ -13,7 +13,6 @@ let grid = document.querySelector("#big-grid");
 grid.style.display = 'flex';
 grid.style.alignItems = 'center';
 grid.style.flexDirection = 'column';
-//grid.style.width = '1000px'
 
 // Creo las 16 x 16 grid dentro del div inicial (Usar CSS grid)
 for (let i = 1; i <= 16; i++) {
@@ -30,4 +29,11 @@ for (let i = 1; i <= 16; i++) {
 }
     
 // Después de crear el grid hay que crear el efecto Hover.
+let squares = document.querySelectorAll('.square')
+squares.forEach((sqr) => {
+    sqr.addEventListener('mouseover', () => {
+        sqr.style.backgroundColor = '#7576D4';
+    })
+})
+
 // También hay que dar la opción de cambiar la cantidad de cuadrados.
