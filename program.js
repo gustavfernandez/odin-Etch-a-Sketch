@@ -2,54 +2,60 @@
 // La función createSquare crea el cuadrado que cambia de color.
 // Color default: gris
 let currentNum = 16
+let R, G, B;
 function createSquare (square, filas) {
-let pad = `${16*16/filas}px`
+    let pad = `${16*16/filas}px`
     square.classList.add('square');
     square.style.backgroundColor = '#48484B';
-    //square.style.border = '1px solid black';
     square.style.padding = pad;
 }
 
-let block = document.querySelector('#block')
-block.style.display = 'flex';
-block.style.flexDirection = 'column';
-block.style.alignItems = 'center';
+divs = document.querySelectorAll('div')
+divs.forEach( div => {
+    div.style.display = 'flex';
+    div.style.flexDirection = 'column';
+    div.style.alignItems = 'center';
+})
 
-let grid = document.querySelector("#big-grid");
-grid.style.display = 'flex';
-grid.style.alignItems = 'center';
-grid.style.flexDirection = 'column';
+let block = document.querySelector('#block');
+let grid = document.querySelector("#big-grid")
 
 // También hay que dar la opción de cambiar la cantidad de cuadrados.
 
 let butonSquare = document.createElement('button')
 butonSquare.textContent = 'Select number of squares'
-butonSquare.style.margin = '20px'
-butonSquare.style.padding = '10px'
-butonSquare.style.width = '200px'
-butonSquare.style.borderRadius = '10px'
-butonSquare.style.backgroundColor = '#7576D4'
-butonSquare.style.color = '#ffffff'
 butonSquare.onclick = () => selectNumber()
 block.appendChild(butonSquare)
 
 let butonErase = document.createElement('button')
 butonErase.textContent = 'Erase Grid'
-butonErase.style.padding = '10px'
-butonErase.style.width = '200px'
-butonErase.style.borderRadius = '10px'
-butonErase.style.backgroundColor = '#7576D4'
-butonErase.style.color = '#ffffff'
-butonErase.onclick = () => eraseGrid(currentNum)
+butonErase.onclick = () => eraseGrid()
 block.appendChild(butonErase)
 
+buttons = document.querySelectorAll('button');
+//Un poquito de CSS a los botones
+buttons.forEach( button => {
+    button.style.margin = '10px 0px 0px 0px'
+    button.style.padding = '10px'
+    button.style.width = '200px'
+    button.style.borderRadius = '10px'
+    button.style.backgroundColor = '#7576D4'
+    button.style.color = '#ffffff'
+})
+
+// Función que pide el nuevo número de Grid
 function selectNumber() {
     let num = Number(prompt("Select the number of Squares"))
-    currentNum = num
-    setGrid(num)
-
+    if (num===0) {
+        setGrid(currentNum)
+    }
+    else {
+        currentNum = num
+        setGrid(currentNum)
+    }
 }
 
+//Función que settea el Grid
 function setGrid(num) {
     grid.innerHTML = ''
     for (let i = 1; i <= num; i++) {
@@ -64,15 +70,20 @@ function setGrid(num) {
         grid.appendChild(fila)
     }
     // Después de crear el grid hay que crear el efecto Hover.
+    // También se pone el color azar.
     let squares = document.querySelectorAll('.square')
     squares.forEach((sqr) => {
         sqr.addEventListener('mouseover', () => {
-            sqr.style.backgroundColor = '#7576D4';
+            R = Math.floor(Math.random()*256)
+            G = Math.floor(Math.random()*256)
+            B = Math.floor(Math.random()*256)
+            sqr.style.backgroundColor = `rgb(${R}, ${G}, ${B})`;
         })
     })
 }
 
-function eraseGrid(num) {
+//Función que limpia el Grid
+function eraseGrid() {
     let squares = document.querySelectorAll('.square')
     squares.forEach((sqr) => {
         sqr.style.backgroundColor = '#48484B';
