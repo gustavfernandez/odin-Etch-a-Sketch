@@ -2,11 +2,11 @@
 // La función createSquare crea el cuadrado que cambia de color.
 // Color default: gris
 let currentNum = 16
-let R, G, B;
+let R = 255; let G = 255; let B = 255;
 function createSquare (square, filas) {
     let pad = `${16*16/filas}px`
     square.classList.add('square');
-    square.style.backgroundColor = '#48484B';
+    square.style.backgroundColor =`rgb(255, 255, 255)`;
     square.style.padding = pad;
 }
 
@@ -17,8 +17,11 @@ divs.forEach( div => {
     div.style.alignItems = 'center';
 })
 
+let body = document.querySelector('body')
+body.style.backgroundColor = '#B3B4F5'
 let block = document.querySelector('#block');
 let grid = document.querySelector("#big-grid")
+grid.style.margin = '50px'
 
 // También hay que dar la opción de cambiar la cantidad de cuadrados.
 
@@ -35,7 +38,7 @@ block.appendChild(butonErase)
 buttons = document.querySelectorAll('button');
 //Un poquito de CSS a los botones
 buttons.forEach( button => {
-    button.style.margin = '10px 0px 0px 0px'
+    button.style.margin = '20px 0px 0px 0px'
     button.style.padding = '10px'
     button.style.width = '200px'
     button.style.borderRadius = '10px'
@@ -73,10 +76,15 @@ function setGrid(num) {
     // También se pone el color azar.
     let squares = document.querySelectorAll('.square')
     squares.forEach((sqr) => {
-        sqr.addEventListener('mouseover', () => {
-            R = Math.floor(Math.random()*256)
-            G = Math.floor(Math.random()*256)
-            B = Math.floor(Math.random()*256)
+        sqr.addEventListener('mouseover', (e) => {
+            let rgb = e.target.style.backgroundColor
+            let new_rgb = rgb.split(",")
+            let casi_R = new_rgb[0].split("(")
+            let casi_B = new_rgb[2].split(")")
+
+            R = Number(casi_R[1]) - 25.5;
+            G = Number(new_rgb[1]) - 25.5;
+            B = Number(casi_B[0]) - 25.5;
             sqr.style.backgroundColor = `rgb(${R}, ${G}, ${B})`;
         })
     })
@@ -86,7 +94,7 @@ function setGrid(num) {
 function eraseGrid() {
     let squares = document.querySelectorAll('.square')
     squares.forEach((sqr) => {
-        sqr.style.backgroundColor = '#48484B';
+        sqr.style.backgroundColor = 'rgb(255,255,255)';
         })
     }
 
